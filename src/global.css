@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+	--bg: #eeeff3;
+	--primary: #e3e3e9;
+	--secondary: #252525;
+	--accent: #1f31d1;
+	--accent-hover: #3041dd;
+	--danger: #771313;
+	--danger-hover: #a11d1d;
+	--border: #83849654;
+}
+
+body {
+	margin: 0;
+	background-color: var(--bg);
+}
+
+* {
+	font-family: 'Inter', sans-serif;
+	box-sizing: border-box;
+}
+
+h1 {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.btn {
+	padding: 0.3rem 1rem;
+	border: 1px solid var(--border);
+	border-radius: 0.6rem;
+	cursor: pointer;
+	background-color: transparent;
+	transition: background-color 0.2s;
+	font-size: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+}
+
+.btn:hover {
+	background-color: var(--border);
+}
+
+.btn-primary {
+	background-color: var(--accent);
+	border-color: var(--accent);
+	transition:
+		background-color 0.2s,
+		border-color 0.2s,
+		box-shadow 0.2s;
+	color: white;
+}
+
+.btn-primary:hover {
+	background-color: var(--accent-hover);
+	border-color: var(--accent-hover);
+	box-shadow: 0 0 10px var(--accent-hover);
+}
+
+select {
+	padding: 0.3rem 0.6rem;
+	border: 1px solid var(--border);
+	border-radius: 0.6rem;
+	cursor: pointer;
+	background-color: transparent;
+}
+
+select:hover {
+	background-color: var(--border);
+	transition: background-color 0.2s;
+}

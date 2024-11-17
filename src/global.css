@@ -25,6 +25,10 @@ h1 {
 	margin: 0;
 }
 
+p {
+	margin: 0;
+}
+
 a {
 	text-decoration: none;
 	color: inherit;
@@ -36,7 +40,7 @@ a {
 	border-radius: 0.6rem;
 	cursor: pointer;
 	background-color: transparent;
-	transition: background-color 0.2s;
+	transition: background-color 0.15s;
 	font-size: 1rem;
 	display: flex;
 	align-items: center;
@@ -52,9 +56,9 @@ a {
 	background-color: var(--accent);
 	border-color: var(--accent);
 	transition:
-		background-color 0.2s,
-		border-color 0.2s,
-		box-shadow 0.2s;
+		background-color 0.15s,
+		border-color 0.15s,
+		box-shadow 0.15s;
 	color: white;
 }
 
@@ -70,9 +74,36 @@ select {
 	border-radius: 0.6rem;
 	cursor: pointer;
 	background-color: transparent;
+	transition: background-color 0.15s, border-color 0.15s;
+	font-size: 1rem;
 }
 
 select:hover {
 	background-color: var(--border);
-	transition: background-color 0.2s;
+}
+
+select:focus {
+	outline: none;
+	border: 1px solid var(--accent);
+	background-color: transparent;
+}
+
+input {
+	padding: 0.3rem 0.6rem;
+	border: 1px solid var(--border);
+	border-radius: 0.6rem;
+	cursor: text;
+	background-color: transparent;
+	font-size: 1rem;
+	transition: background-color 0.15s, border-color 0.15s;
+}
+
+input:hover {
+	background-color: var(--border);
+}
+
+input:focus {
+	outline: none;
+	border: 1px solid var(--accent);
+	background-color: transparent;
 }

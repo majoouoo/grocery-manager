@@ -3,8 +3,8 @@
 	import { page } from '$app/stores';
 
 	let filters = JSON.parse(localStorage.getItem('filters') || JSON.stringify({
-		group: 'location',
-		sort: 'date'
+		group: 'category',
+		sort: 'exp-date'
 	}));
 
 	$: localStorage.setItem('filters', JSON.stringify(filters));
@@ -12,7 +12,9 @@
 
 <main>
 	<section id="sidebar">
-		<h1>Grocery Manager</h1>
+		<a href="/">
+			<h1>Grocery Manager</h1>
+		</a>
 
 		<section id="links">
 			<a class="btn btn-primary" href="/add">
@@ -38,17 +40,20 @@
 				<div class="filter">
 					<label for="group">Group by:</label>
 					<select name="group" id="group" bind:value={ filters.group }>
+						<option value="category">Category</option>
 						<option value="location">Location</option>
-						<option value="month">Month due</option>
+						<option value="exp-month">Expiration Month</option>
 					</select>
 				</div>
 
 				<div class="filter">
 					<label for="sort">Sort by:</label>
 					<select name="sort" id="sort" bind:value={ filters.sort }>
-						<option value="date">Date due</option>
-						<option value="name">Name</option>
+						<option value="exp-date">Expiration</option>
 						<option value="quantity">Quantity</option>
+						<option value="opened-date">Date Opened</option>
+						<option value="bought-date">Date Bought</option>
+						<option value="name">Name</option>
 					</select>
 				</div>
 			</section>
@@ -71,6 +76,7 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+		min-width: 300px;
 	}
 
 	#links {

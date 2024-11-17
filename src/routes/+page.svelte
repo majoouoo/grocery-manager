@@ -12,20 +12,21 @@
 			})
 	);
 
-  $: localStorage.setItem('filters', JSON.stringify(filters));
+	$: localStorage.setItem('filters', JSON.stringify(filters));
 
 	let groups = [...new Set(items.map((item) => item[filters.group]))];
 
-  $: groups = [...new Set(items.map((item) => item[filters.group]))]
+	$: groups = [...new Set(items.map((item) => item[filters.group]))];
 
-	const capitalize = (str: string) => {
-		return String(str).charAt(0).toUpperCase() + String(str).slice(1);
+	const changeQuantity = (index: number, quantity: number) => {
+		items[index].quantity = quantity;
+		localStorage.setItem('items', JSON.stringify(items));
 	};
 </script>
 
 <main>
 	<section id="sidebar">
-    <SidebarNav />
+		<SidebarNav />
 
 		<section id="filters">
 			<h1>Filters</h1>
@@ -52,11 +53,11 @@
 	<section id="list">
 		{#each groups as group}
 			<section class="group">
-				<h2>{typeof group == 'string' ? capitalize(group) : group}</h2>
+				<h2>{group}</h2>
 				{#each items
 					.filter((item) => item[filters.group] === group)
-					.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item}
-					<ListItem {item} />
+					.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item, index (item.id)}
+					<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(index, e.detail) }/>
 				{/each}
 			</section>
 		{/each}

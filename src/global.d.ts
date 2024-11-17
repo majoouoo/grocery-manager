@@ -1,4 +1,5 @@
 interface Item {
+	id: number;
 	name: string;
 	category: string;
 	location: string;
@@ -6,7 +7,6 @@ interface Item {
 	quantityUnit: string;
 	expDate: Date | null;
 	boughtDate: Date | null;
-	consumeWithin: number | null;
 }
 
 interface Filters {

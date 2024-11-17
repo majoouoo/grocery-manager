@@ -13,15 +13,14 @@
 		quantityUnit = 'units';
 		expDate = null;
 		boughtDate = new Date().toISOString().split('T')[0];
-		consumeWithin = null;
 	};
 
 	let name: string = '';
 
-	let category: string = 'unset';
+	let category: string = 'Unset';
 	let otherCategory: string = '';
 
-	let location: string = 'unset';
+	let location: string = 'Unset';
 	let otherLocation: string = '';
 
 	let quantity: number | null = null;
@@ -29,7 +28,6 @@
 
 	let expDate: string | null = null;
 	let boughtDate: string | null = new Date().toISOString().split('T')[0];
-	let consumeWithin: number | null = null;
 
 	const addItem = () => {
 		if (!name) {
@@ -38,6 +36,7 @@
 		}
 
 		items.push({
+			id: items.length,
 			name,
 			category: category === 'custom' ? otherCategory : category,
 			location: location === 'custom' ? otherLocation : location,
@@ -45,7 +44,6 @@
 			quantityUnit,
 			expDate: expDate ? Date.parse(expDate) : null,
 			boughtDate: boughtDate ? Date.parse(boughtDate) : null,
-			consumeWithin
 		});
 
 		message = 'Item added successfully.';
@@ -67,12 +65,12 @@
 		<div class="property">
 			<label for="category">Category:</label>
 			<select name="category" id="category" bind:value={category}>
-				<option value="unset">(Unset)</option>
-				<option value="dairy">Dairy</option>
-				<option value="pastries">Pastries</option>
-				<option value="meat">Meat</option>
-				<option value="canned">Canned Food</option>
-				<option value="beverages">Beverages</option>
+				<option value="Unset">(Unset)</option>
+				<option value="Dairy">Dairy</option>
+				<option value="Pastries">Pastries</option>
+				<option value="Meat">Meat</option>
+				<option value="Canned">Canned Food</option>
+				<option value="Beverages">Beverages</option>
 				<option value="custom">Custom</option>
 			</select>
 			{#if category === 'custom'}
@@ -88,12 +86,12 @@
 		<div class="property">
 			<label for="location">Location:</label>
 			<select name="location" id="location" bind:value={location}>
-				<option value="unset">(Unset)</option>
-				<option value="fridge">Fridge</option>
-				<option value="panty">Pantry</option>
-				<option value="kitchen">Kitchen</option>
-				<option value="basement">Basement</option>
-				<option value="freezer">Freezer</option>
+				<option value="Unset">(Unset)</option>
+				<option value="Fridge">Fridge</option>
+				<option value="Pantry">Pantry</option>
+				<option value="Kitchen">Kitchen</option>
+				<option value="Basement">Basement</option>
+				<option value="Freezer">Freezer</option>
 				<option value="custom">Custom</option>
 			</select>
 			{#if location === 'custom'}
@@ -112,13 +110,13 @@
 				<input type="number" id="quantity" bind:value={quantity} />
 				<select name="unit" id="unit" bind:value={quantityUnit}>
 					<option value="units">Units</option>
-					<option value="packs">Packs</option>
+					<option value="pck">Packs</option>
 					<option value="cans">Cans</option>
-					<option value="bottles">Bottles</option>
-					<option value="kilograms">Kilograms (kg)</option>
-					<option value="litres">Litres (l)</option>
-					<option value="pounds">Pounds (lb)</option>
-					<option value="gallons">Gallons (gal)</option>
+					<option value="btl">Bottles</option>
+					<option value="kg">Kilograms (kg)</option>
+					<option value="l">Litres (l)</option>
+					<option value="lb">Pounds (lb)</option>
+					<option value="gal">Gallons (gal)</option>
 				</select>
 			</div>
 		</div>
@@ -131,11 +129,6 @@
 		<div class="property">
 			<label for="bought-date">Date Bought:</label>
 			<input type="date" id="bought-date" bind:value={boughtDate} />
-		</div>
-
-		<div class="property">
-			<label for="consume-within">Consume within ___ days:</label>
-			<input type="number" id="consume-within" bind:value={consumeWithin} />
 		</div>
 
 		<button class="btn btn-primary" on:click={addItem}>

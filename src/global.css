@@ -8,6 +8,7 @@
 	--accent-hover: #3041dd;
 	--danger: #771313;
 	--danger-hover: #a11d1d;
+	--warning: #d1a31f;
 	--border: #83849654;
 }
 
@@ -21,10 +22,8 @@ body {
 	box-sizing: border-box;
 }
 
-h1 {
-	margin: 0;
-}
-
+h1,
+h2,
 p {
 	margin: 0;
 }
@@ -74,7 +73,9 @@ select {
 	border-radius: 0.6rem;
 	cursor: pointer;
 	background-color: transparent;
-	transition: background-color 0.15s, border-color 0.15s;
+	transition:
+		background-color 0.15s,
+		border-color 0.15s;
 	font-size: 1rem;
 }
 
@@ -95,7 +96,9 @@ input {
 	cursor: text;
 	background-color: transparent;
 	font-size: 1rem;
-	transition: background-color 0.15s, border-color 0.15s;
+	transition:
+		background-color 0.15s,
+		border-color 0.15s;
 }
 
 input:hover {

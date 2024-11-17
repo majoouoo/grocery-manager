@@ -1,28 +1,10 @@
 <script lang="ts">
+	import SidebarNav from '$lib/SidebarNav.svelte';
 </script>
 
 <main>
 	<section id="sidebar">
-		<a href="/">
-			<h1>Grocery Manager</h1>
-		</a>
-
-		<section id="links">
-			<a class="btn btn-primary" href="/add">
-				<span class="material-symbols-rounded"> add </span>
-				Add an item
-			</a>
-
-			<a class="btn" href="/">
-				<span class="material-symbols-rounded"> home </span>
-				Home
-			</a>
-
-			<a class="btn" href="/settings">
-				<span class="material-symbols-rounded"> settings </span>
-				Settings
-			</a>
-		</section>
+		<SidebarNav />
 	</section>
 
 	<section id="content">
@@ -51,11 +33,5 @@
 		background-color: var(--bg);
 		border-radius: 1rem;
 		overflow: auto;
-	}
-
-	#links {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
 	}
 </style>

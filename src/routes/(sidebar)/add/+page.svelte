@@ -57,7 +57,7 @@
 
 <main>
 	<section id="content">
-		<h1>Add an item</h1>
+		<h2>Add an item</h2>
 
 		<div class="property">
 			<label for="name">Name:</label>

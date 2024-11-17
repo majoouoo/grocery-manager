@@ -9,6 +9,10 @@
 	const changeQuantity = (quantity: number) => {
 		dispatch("changeQuantity", quantity);
 	};
+
+	const deleteItem = () => {
+		dispatch("deleteItem");
+	};
 </script>
 
 <main>
@@ -28,7 +32,7 @@
 		{/if}
 		<p class="property">
 			<span class="material-symbols-rounded"> calendar_month </span>
-			<span>{item.expDate || '(none)'}</span>
+			<span>{item.expDate ? new Date(item.expDate).toISOString().split('T')[0] : '(none)'}</span>
 		</p>
 	</section>
 
@@ -49,7 +53,7 @@
 			<button style="border-bottom-left-radius: 0.5rem;">
 				<span class="material-symbols-rounded"> edit_square </span>
 			</button>
-			<button style="border-bottom-right-radius: 0.5rem; color: var(--danger);">
+			<button style="border-bottom-right-radius: 0.5rem; color: var(--danger);" on:click={ deleteItem }>
 				<span class="material-symbols-rounded"> delete </span>
 			</button>
 		</div>

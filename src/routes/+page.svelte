@@ -22,6 +22,12 @@
 		items[index].quantity = quantity;
 		localStorage.setItem('items', JSON.stringify(items));
 	};
+
+	const deleteItem = (index: number) => {
+		items.splice(index, 1);
+		items = items
+		localStorage.setItem('items', JSON.stringify(items));
+	};
 </script>
 
 <main>
@@ -51,16 +57,22 @@
 	</section>
 
 	<section id="list">
-		{#each groups as group}
-			<section class="group">
-				<h2>{group}</h2>
-				{#each items
-					.filter((item) => item[filters.group] === group)
-					.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item, index (item.id)}
-					<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(index, e.detail) }/>
-				{/each}
-			</section>
-		{/each}
+		{#if items.length === 0}
+			<div id="no-items-msg">
+				<p>No items found.</p>
+			</div>
+		{:else}
+			{#each groups as group}
+				<section class="group">
+					<h2>{group}</h2>
+					{#each items
+						.filter((item) => item[filters.group] === group)
+						.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item, index (item.id)}
+						<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(index, e.detail) } on:deleteItem={ e => deleteItem(index) }/>
+					{/each}
+				</section>
+			{/each}
+		{/if}
 	</section>
 </main>
 
@@ -101,6 +113,13 @@
 		background-color: var(--bg);
 		border-radius: 1rem;
 		overflow: auto;
+	}
+
+	#no-items-msg {
+		display: flex;
+		justify-content: center;
+		grid-column: 1 / -1;
+		margin-top: 2rem;
 	}
 
 	.group {

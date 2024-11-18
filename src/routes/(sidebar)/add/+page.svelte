@@ -6,9 +6,9 @@
 	const resetFields = () => {
 		name = '';
 		category = 'Unset';
-		otherCategory = '';
+		customCategory = '';
 		location = 'Unset';
-		otherLocation = '';
+		customLocation = '';
 		quantity = null;
 		quantityUnit = 'units';
 		expDate = null;
@@ -18,10 +18,10 @@
 	let name: string = '';
 
 	let category: string = 'Unset';
-	let otherCategory: string = '';
+	let customCategory: string = '';
 
 	let location: string = 'Unset';
-	let otherLocation: string = '';
+	let customLocation: string = '';
 
 	let quantity: number | null = null;
 	let quantityUnit: string = 'units';
@@ -37,12 +37,14 @@
 
 		items.push({
 			name,
-			category: category === 'custom' ? otherCategory : category,
-			location: location === 'custom' ? otherLocation : location,
+			category: category === 'custom' ? customCategory : category,
+			categoryIsCustom: category === 'custom',
+			location: location === 'custom' ? customLocation : location,
+			locationIsCustom: location === 'custom',
 			quantity,
 			quantityUnit,
 			expDate: expDate ? Date.parse(expDate) : null,
-			boughtDate: boughtDate ? Date.parse(boughtDate) : null,
+			boughtDate: boughtDate ? Date.parse(boughtDate) : null
 		});
 
 		message = 'Item added successfully.';
@@ -76,7 +78,7 @@
 				<input
 					type="text"
 					id="other-category"
-					bind:value={otherCategory}
+					bind:value={customCategory}
 					placeholder="Custom Category"
 				/>
 			{/if}
@@ -97,14 +99,14 @@
 				<input
 					type="text"
 					id="other-location"
-					bind:value={otherLocation}
+					bind:value={customLocation}
 					placeholder="Custom Location"
 				/>
 			{/if}
 		</div>
 
 		<div class="property">
-			<label for="quantity">Quantity</label>
+			<label for="quantity">Quantity:</label>
 			<div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
 				<input type="number" id="quantity" bind:value={quantity} />
 				<select name="unit" id="unit" bind:value={quantityUnit}>

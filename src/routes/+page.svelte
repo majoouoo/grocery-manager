@@ -2,6 +2,7 @@
 	import ListItem from '$lib/ListItem.svelte';
 	import SidebarNav from '$lib/SidebarNav.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import EditModal from '$lib/EditModal.svelte';
 
 	let items: Item[] = JSON.parse(localStorage.getItem('items') || '[]');
 
@@ -30,14 +31,29 @@
 	const openDeleteModal = (item: Item) => {
 		itemToDelete = item;
 		isDeleteModalOpen = true;
-	}
+	};
 
 	const deleteItem = (item: Item) => {
 		const index = items.findIndex((i) => i === item);
 		items.splice(index, 1);
-		items = items
+		items = items;
 		localStorage.setItem('items', JSON.stringify(items));
 		isDeleteModalOpen = false;
+	};
+
+	let isEditModalOpen: boolean = false;
+	let itemToEdit: Item;
+	const openEditModal = (item: Item) => {
+		itemToEdit = item;
+		isEditModalOpen = true;
+	};
+
+	const editItem = ({ item, originalItem }: { item: Item; originalItem: Item }) => {
+		const index = items.findIndex((i) => i === originalItem);
+		items[index] = item;
+		items = items;
+		localStorage.setItem('items', JSON.stringify(items));
+		isEditModalOpen = false;
 	};
 </script>
 
@@ -79,7 +95,13 @@
 					{#each items
 						.filter((item) => item[filters.group] === group)
 						.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item (item)}
-						<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(e.detail) } on:deleteItem={ e => openDeleteModal(e.detail) }/>
+						<ListItem
+							{item}
+							groupFilter={filters.group}
+							on:changeQuantity={(e) => changeQuantity(e.detail)}
+							on:deleteItem={(e) => openDeleteModal(e.detail)}
+							on:editItem={(e) => openEditModal(e.detail)}
+						/>
 					{/each}
 				</section>
 			{/each}
@@ -87,7 +109,19 @@
 	</section>
 
 	{#if isDeleteModalOpen}
-		<DeleteModal item={itemToDelete} on:deleteItem={ e => deleteItem(e.detail) } on:cancel={ () => isDeleteModalOpen = false }/>
+		<DeleteModal
+			item={itemToDelete}
+			on:deleteItem={(e) => deleteItem(e.detail)}
+			on:cancel={() => (isDeleteModalOpen = false)}
+		/>
+	{/if}
+
+	{#if isEditModalOpen}
+		<EditModal
+			item={itemToEdit}
+			on:editItem={(e) => editItem(e.detail)}
+			on:cancel={() => (isEditModalOpen = false)}
+		/>
 	{/if}
 </main>
 

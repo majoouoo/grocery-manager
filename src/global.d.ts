@@ -1,7 +1,9 @@
 interface Item {
 	name: string;
 	category: string;
+	categoryIsCustom: boolean;
 	location: string;
+	locationIsCustom: boolean;
 	quantity: number | null;
 	quantityUnit: string;
 	expDate: Date | null;

@@ -7,11 +7,11 @@
 	const dispatch = createEventDispatcher();
 
 	const changeQuantity = (quantity: number) => {
-		dispatch("changeQuantity", quantity);
+		dispatch("changeQuantity", { item: item, quantity: quantity });
 	};
 
 	const deleteItem = () => {
-		dispatch("deleteItem");
+		dispatch("deleteItem", item);
 	};
 </script>
 
@@ -38,14 +38,14 @@
 
 	<section id="actions">
 		<div id="quantity-btns">
-			<button style="border-top-left-radius: 0.5rem;" on:click={ () => changeQuantity(item.quantity ? item.quantity - 1 : 0) }>
+			<button style="border-top-left-radius: 0.5rem;" on:click={ () => changeQuantity(item.quantity !== null ? item.quantity - 1 : 0) }>
 				<span class="material-symbols-rounded"> remove </span>
 			</button>
 			<div id="quantity-input-wrapper">
 				<input type="number" name="quantity" id="quantity" bind:value={item.quantity} on:input={ (e) => changeQuantity(Number((e.target as HTMLInputElement).value)) }>
 				<p id="quantity-unit">{item.quantityUnit}</p>
 			</div>
-			<button style="border-top-right-radius: 0.5rem;" on:click={ () => changeQuantity(item.quantity ? item.quantity + 1 : 0) }>
+			<button style="border-top-right-radius: 0.5rem;" on:click={ () => changeQuantity(item.quantity !== null ? item.quantity + 1 : 0) }>
 				<span class="material-symbols-rounded"> add </span>
 			</button>
 		</div>

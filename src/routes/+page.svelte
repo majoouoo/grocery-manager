@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ListItem from '$lib/ListItem.svelte';
 	import SidebarNav from '$lib/SidebarNav.svelte';
+	import DeleteModal from '$lib/DeleteModal.svelte';
 
 	let items: Item[] = JSON.parse(localStorage.getItem('items') || '[]');
 
@@ -18,15 +19,25 @@
 
 	$: groups = [...new Set(items.map((item) => item[filters.group]))];
 
-	const changeQuantity = (index: number, quantity: number) => {
+	const changeQuantity = ({ item, quantity }: { item: Item; quantity: number }) => {
+		const index = items.findIndex((i) => i === item);
 		items[index].quantity = quantity;
 		localStorage.setItem('items', JSON.stringify(items));
 	};
 
-	const deleteItem = (index: number) => {
+	let isDeleteModalOpen: boolean = false;
+	let itemToDelete: Item;
+	const openDeleteModal = (item: Item) => {
+		itemToDelete = item;
+		isDeleteModalOpen = true;
+	}
+
+	const deleteItem = (item: Item) => {
+		const index = items.findIndex((i) => i === item);
 		items.splice(index, 1);
 		items = items
 		localStorage.setItem('items', JSON.stringify(items));
+		isDeleteModalOpen = false;
 	};
 </script>
 
@@ -67,13 +78,17 @@
 					<h2>{group}</h2>
 					{#each items
 						.filter((item) => item[filters.group] === group)
-						.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item, index (item.id)}
-						<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(index, e.detail) } on:deleteItem={ e => deleteItem(index) }/>
+						.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item (item)}
+						<ListItem {item} groupFilter={filters.group} on:changeQuantity={ e => changeQuantity(e.detail) } on:deleteItem={ e => openDeleteModal(e.detail) }/>
 					{/each}
 				</section>
 			{/each}
 		{/if}
 	</section>
+
+	{#if isDeleteModalOpen}
+		<DeleteModal item={itemToDelete} on:deleteItem={ e => deleteItem(e.detail) } on:cancel={ () => isDeleteModalOpen = false }/>
+	{/if}
 </main>
 
 <style>

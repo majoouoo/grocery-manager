@@ -5,9 +5,9 @@
 
 	const resetFields = () => {
 		name = '';
-		category = 'unset';
+		category = 'Unset';
 		otherCategory = '';
-		location = 'unset';
+		location = 'Unset';
 		otherLocation = '';
 		quantity = null;
 		quantityUnit = 'units';
@@ -36,7 +36,6 @@
 		}
 
 		items.push({
-			id: items.length,
 			name,
 			category: category === 'custom' ? otherCategory : category,
 			location: location === 'custom' ? otherLocation : location,

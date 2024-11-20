@@ -17,9 +17,33 @@
 	const editItem = () => {
 		dispatch('editItem', item);
 	};
+
+	let isDueSoon = false;
+	let isDueExpired = false;
+	$: {
+		if (item.expDate) {
+			const expDate = new Date(item.expDate);
+			const today = new Date();
+			const diff = expDate.getTime() - today.getTime();
+			console.log(diff)
+			if (expDate === null) {
+				isDueSoon = false;
+				isDueExpired = false;
+			} else if (diff < 1000 * 60 * 60 * 24 * -1) {
+				isDueSoon = false;
+				isDueExpired = true;
+			} else if (diff < 1000 * 60 * 60 * 24 * 2) {
+				isDueSoon = true;
+				isDueExpired = false;
+			} else {
+				isDueSoon = false;
+				isDueExpired = false;
+			}
+		}
+	}
 </script>
 
-<main>
+<main class:due-soon={isDueSoon} class:due-expired={isDueExpired}>
 	<section id="info">
 		<p id="name">{item.name}</p>
 		{#if groupFilter !== 'category'}
@@ -34,7 +58,7 @@
 				<span>{item.location}</span>
 			</p>
 		{/if}
-		<p class="property">
+		<p class="property" id="exp-date">
 			<span class="material-symbols-rounded"> calendar_month </span>
 			<span>{item.expDate ? new Date(item.expDate).toISOString().split('T')[0] : '(none)'}</span>
 		</p>
@@ -43,7 +67,7 @@
 	<section id="actions">
 		<div id="quantity-btns">
 			<button
-				style="border-top-left-radius: 0.5rem;"
+				style="border-top-left-radius: 0.4rem;"
 				on:click={() => changeQuantity(item.quantity !== null ? item.quantity - 1 : 0)}
 			>
 				<span class="material-symbols-rounded"> remove </span>
@@ -59,18 +83,18 @@
 				<p id="quantity-unit">{item.quantityUnit}</p>
 			</div>
 			<button
-				style="border-top-right-radius: 0.5rem;"
+				style="border-top-right-radius: 0.4rem;"
 				on:click={() => changeQuantity(item.quantity !== null ? item.quantity + 1 : 0)}
 			>
 				<span class="material-symbols-rounded"> add </span>
 			</button>
 		</div>
 		<div id="action-btns">
-			<button style="border-bottom-left-radius: 0.5rem;" on:click={editItem}>
+			<button style="border-bottom-left-radius: 0.4rem;" on:click={editItem}>
 				<span class="material-symbols-rounded"> edit_square </span>
 			</button>
 			<button
-				style="border-bottom-right-radius: 0.5rem; color: var(--danger);"
+				style="border-bottom-right-radius: 0.4rem; color: var(--danger);"
 				on:click={deleteItem}
 			>
 				<span class="material-symbols-rounded"> delete </span>
@@ -83,9 +107,10 @@
 	main {
 		padding: 0.8rem;
 		background-color: var(--primary);
-		border-radius: 1rem;
+		border-radius: 1.2rem;
 		display: grid;
 		grid-template-columns: 1fr auto;
+		gap: 1rem;
 	}
 
 	#info {
@@ -112,7 +137,7 @@
 		gap: 1px;
 		grid-template-rows: auto auto;
 		background-color: var(--border);
-		border-radius: 0.5rem;
+		border-radius: 0.4rem;
 		border: 1px solid var(--border);
 	}
 
@@ -175,5 +200,21 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 1px;
+	}
+
+	.due-soon {
+		box-shadow: 0 0 0 1px var(--warning), 0 0 10px var(--warning);
+	}
+
+	.due-soon #exp-date {
+		color: var(--warning-text);
+	}
+
+	.due-expired {
+		box-shadow: 0 0 0 1px var(--danger), 0 0 10px var(--danger);
+	}
+
+	.due-expired #exp-date {
+		color: var(--danger);
 	}
 </style>

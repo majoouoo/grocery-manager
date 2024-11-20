@@ -4,20 +4,20 @@
 	</a>
 
 	<section id="links">
-		<a class="btn btn-primary" href="/add">
-			<span class="material-symbols-rounded"> add </span>
-			Add an item
-		</a>
-
 		<a class="btn" href="/">
 			<span class="material-symbols-rounded"> home </span>
 			Home
 		</a>
 
-		<a class="btn" href="/settings">
+		<a class="btn btn-primary" href="/add">
+			<span class="material-symbols-rounded"> add </span>
+			Add an item
+		</a>
+
+		<!-- <a class="btn" href="/settings">
 			<span class="material-symbols-rounded"> settings </span>
 			Settings
-		</a>
+		</a> -->
 	</section>
 </main>
 

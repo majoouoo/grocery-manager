@@ -24,13 +24,15 @@
 	}
 
 	const applyChanges = () => {
-		if (item.categoryIsCustom) {
-			item.category = customCategory;
-		}
-		if (item.locationIsCustom) {
-			item.location = customLocation;
-		}
+		if (item.categoryIsCustom) item.category = customCategory;
+		if (item.locationIsCustom) item.location = customLocation;
 		dispatch('editItem', { item, originalItem });
+	};
+
+	const cancelModal = () => {
+		if (item.categoryIsCustom) item.category = customCategory;
+		if (item.locationIsCustom) item.location = customLocation;
+		dispatch('cancel');
 	};
 </script>
 
@@ -114,7 +116,7 @@
 			</div>
 
 			<div id="btns">
-				<button class="btn" on:click={() => dispatch('cancel')}> Cancel </button>
+				<button class="btn" on:click={cancelModal}> Cancel </button>
 				<button class="btn btn-primary" on:click={applyChanges}>
 					<span class="material-symbols-rounded"> done </span>
 					Apply

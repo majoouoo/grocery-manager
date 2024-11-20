@@ -1,3 +1,5 @@
+![Image](https://cloud-cg9l2uzlb-hack-club-bot.vercel.app/0grocery_manager_alpha.png)
+
 # Grocery Manager
 
 Grocery Manager is a web application built with SvelteKit to help you manage your grocery items efficiently. You can add items, categorize them by location and food category, and track their quantities and expiration dates. The app uses your browser's local storage as its database.
@@ -50,6 +52,10 @@ You can use the live demo available at https://majoouoo.github.io/grocery-manage
         ```bash
         npm run preview
         ```
+
+## Screenshot
+
+![Image](https://cloud-g8wtj2ymw-hack-club-bot.vercel.app/0image.png)
 
 ## Licenses
 This application uses third-party materials under the following licenses:

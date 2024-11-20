@@ -55,32 +55,51 @@
 		localStorage.setItem('items', JSON.stringify(items));
 		isEditModalOpen = false;
 	};
+
+	let isSidebarVisible: boolean = false;
+	let windowWidth: number = window.innerWidth;
+	if (windowWidth > 1400) {
+		isSidebarVisible = true;
+	}
+
+	window.addEventListener('resize', () => {
+		windowWidth = window.innerWidth;
+		if (windowWidth > 1400) {
+			isSidebarVisible = true;
+		}
+	});
 </script>
 
 <main>
 	<section id="sidebar">
-		<SidebarNav />
+		<button class="btn" id="showMenuBtn" on:click={() => (isSidebarVisible = !isSidebarVisible)}>
+			<span class="material-symbols-rounded">menu</span>
+		</button>
 
-		<section id="filters">
-			<h1>Filters</h1>
+		{#if isSidebarVisible}
+			<SidebarNav />
 
-			<div class="filter">
-				<label for="group">Group by:</label>
-				<select name="group" id="group" bind:value={filters.group}>
-					<option value="category">Category</option>
-					<option value="location">Location</option>
-				</select>
-			</div>
+			<section id="filters">
+				<h1>Filters</h1>
 
-			<div class="filter">
-				<label for="sort">Sort by:</label>
-				<select name="sort" id="sort" bind:value={filters.sort}>
-					<option value="expDate">Expiration</option>
-					<option value="quantity">Quantity</option>
-					<option value="boughtDate">Date Bought</option>
-				</select>
-			</div>
-		</section>
+				<div class="filter">
+					<label for="group">Group by:</label>
+					<select name="group" id="group" bind:value={filters.group}>
+						<option value="category">Category</option>
+						<option value="location">Location</option>
+					</select>
+				</div>
+
+				<div class="filter">
+					<label for="sort">Sort by:</label>
+					<select name="sort" id="sort" bind:value={filters.sort}>
+						<option value="expDate">Expiration</option>
+						<option value="quantity">Quantity</option>
+						<option value="boughtDate">Date Bought</option>
+					</select>
+				</div>
+			</section>
+		{/if}
 	</section>
 
 	<section id="list">
@@ -156,7 +175,7 @@
 	#list {
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
-		margin: 0.5rem;
+		margin: 0.5rem 0.5rem 0.5rem 0;
 		padding: 0.5rem;
 		gap: 0.5rem;
 		background-color: var(--bg);
@@ -178,5 +197,29 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	@media (max-width: 1400px) {
+		#list {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		main {
+			grid-template-columns: auto 1fr;
+		}
+
+		#showMenuBtn {
+			display: flex;
+		}
+
+		#sidebar {
+			padding: 0.5rem;
+		}
+	}
+
+	@media (max-width: 800px) {
+		#list {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

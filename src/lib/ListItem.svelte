@@ -25,7 +25,6 @@
 			const expDate = new Date(item.expDate);
 			const today = new Date();
 			const diff = expDate.getTime() - today.getTime();
-			console.log(diff)
 			if (expDate === null) {
 				isDueSoon = false;
 				isDueExpired = false;

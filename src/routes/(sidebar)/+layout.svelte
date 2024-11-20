@@ -1,10 +1,29 @@
 <script lang="ts">
 	import SidebarNav from '$lib/SidebarNav.svelte';
+
+	let isSidebarVisible: boolean = false;
+	let windowWidth: number = window.innerWidth;
+	if (windowWidth > 1400) {
+		isSidebarVisible = true;
+	}
+
+	window.addEventListener('resize', () => {
+		windowWidth = window.innerWidth;
+		if (windowWidth > 1400) {
+			isSidebarVisible = true;
+		}
+	});
 </script>
 
 <main>
 	<section id="sidebar">
-		<SidebarNav />
+		<button class="btn" id="showMenuBtn" on:click={() => (isSidebarVisible = !isSidebarVisible)}>
+			<span class="material-symbols-rounded">menu</span>
+		</button>
+
+		{#if isSidebarVisible}
+			<SidebarNav />
+		{/if}
 	</section>
 
 	<section id="content">
@@ -29,9 +48,23 @@
 	}
 
 	#content {
-		margin: 0.5rem;
+		margin: 0.5rem 0.5rem 0.5rem 0;
 		background-color: var(--bg);
 		border-radius: 1rem;
 		overflow: auto;
+	}
+
+	@media (max-width: 1400px) {
+		main {
+			grid-template-columns: auto 1fr;
+		}
+
+		#showMenuBtn {
+			display: flex;
+		}
+
+		#sidebar {
+			padding: 0.5rem;
+		}
 	}
 </style>

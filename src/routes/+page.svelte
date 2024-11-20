@@ -3,6 +3,7 @@
 	import SidebarNav from '$lib/SidebarNav.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import EditModal from '$lib/EditModal.svelte';
+	import { base } from '$app/paths';
 
 	let items: Item[] = JSON.parse(localStorage.getItem('items') || '[]');
 
@@ -105,7 +106,7 @@
 			</section>
 		{/if}
 
-		<a href="credits" id="credits">Credits</a>
+		<a href="{base}/credits" id="credits">Credits</a>
 	</section>
 
 	<section id="list">

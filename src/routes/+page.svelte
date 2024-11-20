@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>Home | Grocery Manager</title>
+</svelte:head>
+
 <script lang="ts">
 	import ListItem from '$lib/ListItem.svelte';
 	import SidebarNav from '$lib/SidebarNav.svelte';

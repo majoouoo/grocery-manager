@@ -5,7 +5,7 @@
 	--primary: #e3e3e9;
 	--secondary: #383838;
 	--accent: #1f31d1;
-	--accent-hover: #3041dd;
+	--accent-hover: #1523a3;
 	--danger: #a11d1d;
 	--danger-hover: #771313;
 	--warning: #d1a31f;
@@ -65,7 +65,7 @@ a {
 .btn-primary:hover {
 	background-color: var(--accent-hover);
 	border-color: var(--accent-hover);
-	box-shadow: 0 0 10px var(--accent-hover);
+	box-shadow: 0 0 10px rgba(31, 49, 209, 0.65);
 }
 
 .btn-danger {
@@ -134,7 +134,7 @@ input:focus {
 	font-size: 1.2rem;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 800px) {
 	:root {
 		font-size: 13px;
 	}

@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>Add | Grocery Manager</title>
+</svelte:head>
+
 <script lang="ts">
 	let items: object[] = JSON.parse(localStorage.getItem('items') || '[]');
 
@@ -57,6 +61,7 @@
 <main>
 	<section id="content">
 		<h2>Add an item</h2>
+		<p>All fields except for the name are optional.</p>
 
 		<div class="property">
 			<label for="name">Name:</label>

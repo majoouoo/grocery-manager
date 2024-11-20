@@ -202,7 +202,9 @@
 	}
 
 	.due-soon {
-		box-shadow: 0 0 0 1px var(--warning), 0 0 10px var(--warning);
+		box-shadow:
+			0 0 0 1px var(--warning),
+			0 0 10px var(--warning);
 	}
 
 	.due-soon #exp-date {
@@ -210,7 +212,9 @@
 	}
 
 	.due-expired {
-		box-shadow: 0 0 0 1px var(--danger), 0 0 10px var(--danger);
+		box-shadow:
+			0 0 0 1px var(--danger),
+			0 0 10px var(--danger);
 	}
 
 	.due-expired #exp-date {

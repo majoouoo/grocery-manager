@@ -139,3 +139,8 @@ input:focus {
 		font-size: 13px;
 	}
 }
+
+#credits {
+	text-decoration: underline;
+	margin-top: auto;
+}

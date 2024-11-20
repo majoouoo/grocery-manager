@@ -1,7 +1,3 @@
-<svelte:head>
-	<title>Add | Grocery Manager</title>
-</svelte:head>
-
 <script lang="ts">
 	let items: object[] = JSON.parse(localStorage.getItem('items') || '[]');
 
@@ -57,6 +53,10 @@
 		resetFields();
 	};
 </script>
+
+<svelte:head>
+	<title>Add | Grocery Manager</title>
+</svelte:head>
 
 <main>
 	<section id="content">

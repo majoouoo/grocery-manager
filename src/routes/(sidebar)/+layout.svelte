@@ -24,6 +24,8 @@
 		{#if isSidebarVisible}
 			<SidebarNav />
 		{/if}
+
+		<a href="credits" id="credits">Credits</a>
 	</section>
 
 	<section id="content">

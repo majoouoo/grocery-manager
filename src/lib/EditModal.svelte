@@ -115,6 +115,13 @@
 				<input type="date" id="bought-date" bind:value={item.boughtDate} />
 			</div>
 
+			{#if !item.isOpen}
+				<div class="property">
+					<label for="consume-within">Consume within (days):</label>
+					<input type="number" id="consume-within" bind:value={item.consumeWithin} />
+				</div>
+			{/if}
+
 			<div id="btns">
 				<button class="btn" on:click={cancelModal}> Cancel </button>
 				<button class="btn btn-primary" on:click={applyChanges}>

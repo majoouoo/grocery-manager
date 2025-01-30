@@ -12,8 +12,10 @@ Grocery Manager is a web application built with SvelteKit to help you manage you
 - Group items by category or location.
 - Sort items by quantity, expiration date, or purchase date.
 - Support for custom categories and locations.
-- Keep track of multiple instances with profile management.
+- Keep track of opened products to prevent spoilage.
+- Manage multiple instances with profile switching.
 - Responsive design with a collapsible sidebar for smaller screens.
+- Toggle between light and dark mode.
 
 ## Getting Started
 

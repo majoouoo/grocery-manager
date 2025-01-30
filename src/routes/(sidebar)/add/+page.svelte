@@ -3,6 +3,15 @@
 
 	let message: string | null = null;
 
+	let settings: Settings = JSON.parse(
+		localStorage.getItem('settings') ||
+			JSON.stringify({
+				appearance: 'light',
+        profiles: [{name: "Default", isEdited: false, id: 0}],
+        activeProfile: 0
+			})
+	);
+
 	const resetFields = () => {
 		name = '';
 		category = 'Unset';
@@ -49,7 +58,8 @@
 			expDate: expDate ? Date.parse(expDate) : null,
 			boughtDate: boughtDate ? Date.parse(boughtDate) : null,
 			consumeWithin,
-			isOpen: false
+			isOpen: false,
+			profile: settings.activeProfile
 		});
 
 		message = 'Item added successfully.';

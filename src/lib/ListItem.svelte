@@ -238,12 +238,12 @@
 	}
 
 	#open-btn:disabled {
-		background-color: #ccc;
-		color: #666;
+		background-color: var(--secondary);
+		color: var(--primary);
 	}
 
 	#open-btn:disabled:hover {
-		background-color: #ccc;
+		background-color: var(--secondary);
 	}
 
 	.due-soon {

@@ -3,13 +3,16 @@
 	import SidebarNav from '$lib/SidebarNav.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import EditModal from '$lib/EditModal.svelte';
+	import ProfilesModal from '$lib/ProfilesModal.svelte';
 
 	let items: Item[] = JSON.parse(localStorage.getItem('items') || '[]');
 
 	let settings: Settings = JSON.parse(
 		localStorage.getItem('settings') ||
 			JSON.stringify({
-				appearance: 'light'
+				appearance: 'light',
+        profiles: [{name: "Default", isEdited: false, id: 0}],
+        activeProfile: 0
 			})
 	);
 
@@ -29,18 +32,20 @@
 			document.documentElement.style.setProperty('--bg', '#181818');
 			document.documentElement.style.setProperty('--primary', '#111111');
 			document.documentElement.style.setProperty('--text', '#e0e0e0');
+			document.documentElement.style.setProperty('--secondary', '#9e9e9e');
 		}
 
 		if (settings.appearance === 'light') {
 			document.documentElement.style.setProperty('--bg', '#eeeff3');
 			document.documentElement.style.setProperty('--primary', '#e3e3e9');
 			document.documentElement.style.setProperty('--text', '#1a1a1a');
+			document.documentElement.style.setProperty('--secondary', '#383838');
 		}
 	}
 
-	let groups = [...new Set(items.map((item) => item[filters.group]))];
+	let groups = [...new Set(items.filter((item) => item.profile === settings.activeProfile).map((item) => item[filters.group]))];
 
-	$: groups = [...new Set(items.map((item) => item[filters.group]))];
+	$: groups = [...new Set(items.filter((item) => item.profile === settings.activeProfile).map((item) => item[filters.group]))];
 
 	const changeQuantity = ({ item, quantity }: { item: Item; quantity: number }) => {
 		const index = items.findIndex((i) => i === item);
@@ -90,6 +95,20 @@
 			isSidebarVisible = true;
 		}
 	});
+
+	let isProfilesModalOpen: boolean = false;
+	const switchProfile = () => {
+		settings = JSON.parse(
+			localStorage.getItem('settings') ||
+				JSON.stringify({
+					appearance: 'light',
+					profiles: [{name: "Default", isEdited: false, id: 0}],
+					activeProfile: 0
+				})
+		);
+		items = JSON.parse(localStorage.getItem('items') || '[]');
+		isProfilesModalOpen = false;
+	};
 </script>
 
 <svelte:head>
@@ -136,6 +155,11 @@
 						<option value="dark">Dark</option>
 					</select>
 				</div>
+
+				<div class="filter">
+					<label for="profile">Profile:</label>
+					<button class="btn" id="switchProfile" on:click={() => isProfilesModalOpen = true}>Switch</button>
+				</div>
 			</section>
 
 			<a href="credits" id="credits">Credits</a>
@@ -143,7 +167,7 @@
 	</section>
 
 	<section id="list">
-		{#if items.length === 0}
+		{#if items.filter((item) => item.profile === settings.activeProfile).length === 0}
 			<div id="no-items-msg">
 				<p>No items found.</p>
 			</div>
@@ -152,6 +176,7 @@
 				<section class="group">
 					<h2>{group}</h2>
 					{#each items
+						.filter((item) => item.profile === settings.activeProfile)
 						.filter((item) => item[filters.group] === group)
 						.sort((a, b) => (Number(a[filters.sort]) || 0) - (Number(b[filters.sort]) || 0)) as item (item)}
 						<ListItem
@@ -181,6 +206,13 @@
 			item={itemToEdit}
 			on:editItem={(e) => editItem(e.detail)}
 			on:cancel={() => (isEditModalOpen = false)}
+		/>
+	{/if}
+
+	{#if isProfilesModalOpen}
+		<ProfilesModal
+			on:cancel={() => (isProfilesModalOpen = false)}
+			on:switch={switchProfile}
 		/>
 	{/if}
 </main>

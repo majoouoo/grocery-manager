@@ -10,6 +10,7 @@ interface Item {
 	boughtDate: Date | null;
 	consumeWithin: number | null;
 	isOpen: boolean;
+	profile: number;
 }
 
 interface Filters {
@@ -19,4 +20,12 @@ interface Filters {
 
 interface Settings {
 	appearance: string;
+	profiles: Profile[];
+	activeProfile: number;
+}
+
+interface Profile {
+	name: string;
+	isEdited: boolean;
+	id: number;
 }

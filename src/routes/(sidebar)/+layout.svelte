@@ -1,6 +1,5 @@
 <script lang="ts">
 	import SidebarNav from '$lib/SidebarNav.svelte';
-	import { base } from '$app/paths';
 
 	let isSidebarVisible: boolean = false;
 	let windowWidth: number = window.innerWidth;
@@ -24,9 +23,9 @@
 
 		{#if isSidebarVisible}
 			<SidebarNav />
-		{/if}
 
-		<a href="{base}/credits" id="credits">Credits</a>
+			<a href="credits" id="credits">Credits</a>
+		{/if}
 	</section>
 
 	<section id="content">

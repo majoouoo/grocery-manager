@@ -13,6 +13,7 @@
 		quantityUnit = 'units';
 		expDate = null;
 		boughtDate = new Date().toISOString().split('T')[0];
+		consumeWithin = null;
 	};
 
 	let name: string = '';
@@ -29,6 +30,8 @@
 	let expDate: string | null = null;
 	let boughtDate: string | null = new Date().toISOString().split('T')[0];
 
+	let consumeWithin: number | null = null;
+
 	const addItem = () => {
 		if (!name) {
 			message = 'Please enter a name.';
@@ -44,7 +47,9 @@
 			quantity,
 			quantityUnit,
 			expDate: expDate ? Date.parse(expDate) : null,
-			boughtDate: boughtDate ? Date.parse(boughtDate) : null
+			boughtDate: boughtDate ? Date.parse(boughtDate) : null,
+			consumeWithin,
+			isOpen: false
 		});
 
 		message = 'Item added successfully.';
@@ -65,7 +70,7 @@
 
 		<div class="property">
 			<label for="name">Name:</label>
-			<input type="text" id="name" bind:value={name} />
+			<input type="text" id="name" bind:value={name} on:keypress={e => {if (e.key === 'Enter') addItem()}}/>
 		</div>
 
 		<div class="property">
@@ -85,6 +90,7 @@
 					id="other-category"
 					bind:value={customCategory}
 					placeholder="Custom Category"
+					on:keypress={e => {if (e.key === 'Enter') addItem()}}
 				/>
 			{/if}
 		</div>
@@ -106,6 +112,7 @@
 					id="other-location"
 					bind:value={customLocation}
 					placeholder="Custom Location"
+					on:keypress={e => {if (e.key === 'Enter') addItem()}}
 				/>
 			{/if}
 		</div>
@@ -113,7 +120,7 @@
 		<div class="property">
 			<label for="quantity">Quantity:</label>
 			<div style="display: grid; grid-template-columns: 1fr auto; gap: 0.5rem;">
-				<input type="number" id="quantity" bind:value={quantity} />
+				<input type="number" id="quantity" bind:value={quantity} on:keypress={e => {if (e.key === 'Enter') addItem()}}/>
 				<select name="unit" id="unit" bind:value={quantityUnit}>
 					<option value="units">Units</option>
 					<option value="pck">Packs</option>
@@ -129,12 +136,17 @@
 
 		<div class="property">
 			<label for="exp-date">Expiration:</label>
-			<input type="date" id="exp-date" bind:value={expDate} />
+			<input type="date" id="exp-date" bind:value={expDate} on:keypress={e => {if (e.key === 'Enter') addItem()}}/>
 		</div>
 
 		<div class="property">
 			<label for="bought-date">Date Bought:</label>
-			<input type="date" id="bought-date" bind:value={boughtDate} />
+			<input type="date" id="bought-date" bind:value={boughtDate} on:keypress={e => {if (e.key === 'Enter') addItem()}}/>
+		</div>
+
+		<div class="property">
+			<label for="consume-within">Consume within (days):</label>
+			<input type="number" id="consume-within" bind:value={consumeWithin} on:keypress={e => {if (e.key === 'Enter') addItem()}}/>
 		</div>
 
 		<button class="btn btn-primary" on:click={addItem}>

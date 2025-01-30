@@ -3,6 +3,7 @@
 :root {
 	--bg: #eeeff3;
 	--primary: #e3e3e9;
+	--text: #1a1a1a;
 	--secondary: #383838;
 	--accent: #1f31d1;
 	--accent-hover: #1523a3;
@@ -16,6 +17,7 @@
 body {
 	margin: 0;
 	background-color: var(--bg);
+	color: var(--text);
 }
 
 * {
@@ -111,6 +113,7 @@ input {
 	transition:
 		background-color 0.15s,
 		border-color 0.15s;
+	color: var(--text);
 }
 
 input:hover {
@@ -121,6 +124,14 @@ input:focus {
 	outline: none;
 	border: 1px solid var(--accent);
 	background-color: transparent;
+}
+
+select {
+	color: var(--text);
+}
+
+option {
+	color: black;
 }
 
 #showMenuBtn {

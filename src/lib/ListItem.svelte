@@ -14,17 +14,21 @@
 		dispatch('deleteItem', item);
 	};
 
-	const editItem = () => {
-		dispatch('editItem', item);
+	const openEditModal = () => {
+		dispatch('openEditModal', item);
 	};
 
 	let isDueSoon = false;
 	let isDueExpired = false;
-	$: {
+
+	let expDate = item.expDate ? new Date(item.expDate) : null;
+	const today = new Date();
+	let diff = expDate ? expDate.getTime() - today.getTime() : 0;
+
+	const updateDueStatus = () => {
+		expDate = item.expDate ? new Date(item.expDate) : null;
+		diff = expDate ? expDate.getTime() - today.getTime() : 0;
 		if (item.expDate) {
-			const expDate = new Date(item.expDate);
-			const today = new Date();
-			const diff = expDate.getTime() - today.getTime();
 			if (expDate === null) {
 				isDueSoon = false;
 				isDueExpired = false;
@@ -39,7 +43,21 @@
 				isDueExpired = false;
 			}
 		}
+	};
+
+	$: {
+		updateDueStatus();
 	}
+
+	const openItem = () => {
+		const originalItem = item;
+		if (item.consumeWithin) {
+			item.isOpen = true;
+			item.expDate = (item.expDate && diff < 1000 * 60 * 60 * 24 * item.consumeWithin) ? item.expDate : new Date(today.getTime() + 1000 * 60 * 60 * 24 * item.consumeWithin);
+		}
+		dispatch('editItem', { item, originalItem });
+		updateDueStatus();
+	};
 </script>
 
 <main class:due-soon={isDueSoon} class:due-expired={isDueExpired}>
@@ -61,6 +79,12 @@
 			<span class="material-symbols-rounded"> calendar_month </span>
 			<span>{item.expDate ? new Date(item.expDate).toISOString().split('T')[0] : '(none)'}</span>
 		</p>
+		{#if item.consumeWithin}
+			<p class="property">
+				<span class="material-symbols-rounded"> hourglass </span>
+				<span>{item.consumeWithin} days</span>
+			</p>
+		{/if}
 	</section>
 
 	<section id="actions">
@@ -89,7 +113,13 @@
 			</button>
 		</div>
 		<div id="action-btns">
-			<button style="border-bottom-left-radius: 0.4rem;" on:click={editItem}>
+			{#if item.consumeWithin}
+				<button id="open-btn" disabled={item.isOpen} on:click={openItem}>
+					<span class="material-symbols-rounded"> takeout_dining </span>
+					Open
+				</button>
+			{/if}
+			<button style="border-bottom-left-radius: 0.4rem;" on:click={openEditModal}>
 				<span class="material-symbols-rounded"> edit_square </span>
 			</button>
 			<button
@@ -199,6 +229,21 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 1px;
+	}
+
+	#open-btn {
+		grid-column: 1 / -1;
+		display: flex;
+		gap: 0.2rem;
+	}
+
+	#open-btn:disabled {
+		background-color: #ccc;
+		color: #666;
+	}
+
+	#open-btn:disabled:hover {
+		background-color: #ccc;
 	}
 
 	.due-soon {

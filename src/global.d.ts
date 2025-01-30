@@ -8,9 +8,15 @@ interface Item {
 	quantityUnit: string;
 	expDate: Date | null;
 	boughtDate: Date | null;
+	consumeWithin: number | null;
+	isOpen: boolean;
 }
 
 interface Filters {
 	group: keyof Item;
 	sort: keyof Item;
+}
+
+interface Settings {
+	appearance: string;
 }

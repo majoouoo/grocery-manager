@@ -3,9 +3,15 @@
 	import SidebarNav from '$lib/SidebarNav.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import EditModal from '$lib/EditModal.svelte';
-	import { base } from '$app/paths';
 
 	let items: Item[] = JSON.parse(localStorage.getItem('items') || '[]');
+
+	let settings: Settings = JSON.parse(
+		localStorage.getItem('settings') ||
+			JSON.stringify({
+				appearance: 'light'
+			})
+	);
 
 	let filters: Filters = JSON.parse(
 		localStorage.getItem('filters') ||
@@ -15,7 +21,22 @@
 			})
 	);
 
-	$: localStorage.setItem('filters', JSON.stringify(filters));
+	$: {
+		localStorage.setItem('filters', JSON.stringify(filters));
+		localStorage.setItem('settings', JSON.stringify(settings));
+
+		if (settings.appearance === 'dark') {
+			document.documentElement.style.setProperty('--bg', '#181818');
+			document.documentElement.style.setProperty('--primary', '#111111');
+			document.documentElement.style.setProperty('--text', '#e0e0e0');
+		}
+
+		if (settings.appearance === 'light') {
+			document.documentElement.style.setProperty('--bg', '#eeeff3');
+			document.documentElement.style.setProperty('--primary', '#e3e3e9');
+			document.documentElement.style.setProperty('--text', '#1a1a1a');
+		}
+	}
 
 	let groups = [...new Set(items.map((item) => item[filters.group]))];
 
@@ -84,7 +105,7 @@
 		{#if isSidebarVisible}
 			<SidebarNav />
 
-			<section id="filters">
+			<section class="filters">
 				<h1>Filters</h1>
 
 				<div class="filter">
@@ -104,9 +125,21 @@
 					</select>
 				</div>
 			</section>
-		{/if}
 
-		<a href="{base}/credits" id="credits">Credits</a>
+			<section class="filters">
+				<h1>Settings</h1>
+
+				<div class="filter">
+					<label for="appearance">Appearance:</label>
+					<select name="appearance" id="appearance" bind:value={settings.appearance}>
+						<option value="light">Light</option>
+						<option value="dark">Dark</option>
+					</select>
+				</div>
+			</section>
+
+			<a href="credits" id="credits">Credits</a>
+		{/if}
 	</section>
 
 	<section id="list">
@@ -126,7 +159,8 @@
 							groupFilter={filters.group}
 							on:changeQuantity={(e) => changeQuantity(e.detail)}
 							on:deleteItem={(e) => openDeleteModal(e.detail)}
-							on:editItem={(e) => openEditModal(e.detail)}
+							on:openEditModal={(e) => openEditModal(e.detail)}
+							on:editItem={(e) => editItem(e.detail)}
 						/>
 					{/each}
 				</section>
@@ -167,7 +201,7 @@
 		gap: 1rem;
 	}
 
-	#filters {
+	.filters {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;

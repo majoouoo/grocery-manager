@@ -157,7 +157,7 @@
 				</div>
 
 				<div class="filter">
-					<label for="profile">Profile:</label>
+					<label for="profile">Profile: {settings.profiles.filter(p => p.id === settings.activeProfile)[0].name}</label>
 					<button class="btn" id="switchProfile" on:click={() => isProfilesModalOpen = true}>Switch</button>
 				</div>
 			</section>
@@ -211,7 +211,7 @@
 
 	{#if isProfilesModalOpen}
 		<ProfilesModal
-			on:cancel={() => (isProfilesModalOpen = false)}
+			on:cancel={switchProfile}
 			on:switch={switchProfile}
 		/>
 	{/if}
